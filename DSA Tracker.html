@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DSA Tracker</title>
+<style>
+:root{--bg:#faf8f5;--card:#fff;--tx:#1d1c1a;--mu:#76716a;--bd:#e5e0d8;--ac:#c2410c;--e:#15803d;--m:#b45309;--h:#b91c1c;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161513;--card:#201f1c;--tx:#f1ede6;--mu:#a39d93;--bd:#35332e;--ac:#fb923c;--e:#4ade80;--m:#fbbf24;--h:#f87171;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161513;--card:#201f1c;--tx:#f1ede6;--mu:#a39d93;--bd:#35332e;--ac:#fb923c;--e:#4ade80;--m:#fbbf24;--h:#f87171;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:820px;margin:0 auto;padding:20px 14px 60px}
+h1{font-size:26px;margin:0 0 2px;letter-spacing:-.02em}
+.sub{color:var(--mu);margin:0 0 16px}
+.top{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
+.big{display:flex;justify-content:space-between;align-items:baseline;font-weight:600}
+.big span:last-child{color:var(--mu);font-weight:400;font-size:13px}
+.bar{display:block;height:7px;background:var(--bd);border-radius:9px;overflow:hidden;margin-top:8px}
+.bar b{display:block;height:100%;width:0;background:var(--ac);transition:width .25s}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+input[type=search],select,button{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:7px 10px}
+input[type=search]{flex:1;min-width:140px}button{cursor:pointer}
+.ck{display:flex;gap:6px;align-items:center;color:var(--mu);font-size:14px}
+details{background:var(--card);border:1px solid var(--bd);border-radius:12px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;padding:12px 14px;display:grid;grid-template-columns:1fr auto auto;gap:4px 10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary .n{font-weight:600}.mo{font-size:12px;color:var(--ac)}.c{font-size:13px;color:var(--mu);min-width:48px;text-align:right}
+summary .bar{grid-column:1/-1;margin:0;height:4px}
+.rows{border-top:1px solid var(--bd);padding:4px 8px 8px}
+.row{display:flex;gap:10px;align-items:center;padding:7px 6px;border-radius:8px}
+.row[hidden]{display:none}.row:hover{background:var(--bg)}
+.row input{width:18px;height:18px;accent-color:var(--ac);flex:none}
+.row a{color:var(--tx);text-decoration:none;flex:1}.row a:hover{color:var(--ac);text-decoration:underline}
+.row.d a:first-of-type{text-decoration:line-through;color:var(--mu)}
+.df{font-style:normal;font-size:12px;font-weight:600}.df.E{color:var(--e)}.df.M{color:var(--m)}.df.H{color:var(--h)}
+.row a.g{flex:none;font-size:12px;color:var(--mu);border:1px solid var(--bd);border-radius:6px;padding:0 6px}.row a.lc{color:var(--ac);border-color:var(--ac)}.rv{flex:none;padding:0 6px;font-size:15px;line-height:1.3;color:var(--mu)}.rv.on{color:var(--m)}.row.r{box-shadow:inset 3px 0 var(--m)}
+</style></head><body><main>
+<h1>DSA Tracker</h1>
+<p class="sub">Tick problems as you solve them. Progress is saved in this browser.</p>
+<div class="top">
+ <div class="big"><span id="tot">0 / 0 solved</span><span id="dif"></span></div>
+ <i class="bar"><b id="tb"></b></i>
+ <div class="ctl">
+  <input type="search" id="q" placeholder="Search problems…">
+  <select id="f"><option value="">All levels</option><option value="E">Easy</option><option value="M">Medium</option><option value="H">Hard</option></select>
+  <label class="ck"><input type="checkbox" id="hd"> Hide solved</label><label class="ck"><input type="checkbox" id="ro"> ★ Revision only</label>
+  <button id="ex">Expand all</button><button id="rs">Reset</button>
+ </div>
+</div>
+<div id="list"></div>
+</main>
+<script>
+const T=[
+["Arrays & Hashing",1,"contains-duplicate:E valid-anagram:E two-sum:E majority-element:E move-zeroes:E best-time-to-buy-and-sell-stock:E find-all-numbers-disappeared-in-an-array:E group-anagrams:M top-k-frequent-elements:M product-of-array-except-self:M valid-sudoku:M longest-consecutive-sequence:M subarray-sum-equals-k:M rotate-array:M set-matrix-zeroes:M rotate-image:M spiral-matrix:M maximum-subarray:M"],
+["Strings",1,"reverse-string:E longest-common-prefix:E valid-palindrome-ii:E find-the-index-of-the-first-occurrence-in-a-string:E zigzag-conversion:M string-to-integer-atoi:M multiply-strings:M count-and-say:M"],
+["Two Pointers",2,"valid-palindrome:E remove-duplicates-from-sorted-array:E merge-sorted-array:E two-sum-ii-input-array-is-sorted:M 3sum:M 4sum:M sort-colors:M container-with-most-water:M trapping-rain-water:H"],
+["Sliding Window",2,"maximum-average-subarray-i:E longest-substring-without-repeating-characters:M longest-repeating-character-replacement:M permutation-in-string:M minimum-size-subarray-sum:M fruit-into-baskets:M max-consecutive-ones-iii:M minimum-window-substring:H sliding-window-maximum:H"],
+["Binary Search",2,"binary-search:E sqrtx:E search-a-2d-matrix:M koko-eating-bananas:M find-minimum-in-rotated-sorted-array:M search-in-rotated-sorted-array:M find-first-and-last-position-of-element-in-sorted-array:M find-peak-element:M capacity-to-ship-packages-within-d-days:M time-based-key-value-store:M find-the-duplicate-number:M split-array-largest-sum:H median-of-two-sorted-arrays:H"],
+["Sorting & Intervals",2,"sort-an-array:M kth-largest-element-in-an-array:M merge-intervals:M insert-interval:M non-overlapping-intervals:M minimum-number-of-arrows-to-burst-balloons:M"],
+["Linked List",3,"reverse-linked-list:E merge-two-sorted-lists:E linked-list-cycle:E middle-of-the-linked-list:E palindrome-linked-list:E intersection-of-two-linked-lists:E linked-list-cycle-ii:M reorder-list:M remove-nth-node-from-end-of-list:M add-two-numbers:M copy-list-with-random-pointer:M sort-list:M lru-cache:M merge-k-sorted-lists:H reverse-nodes-in-k-group:H"],
+["Stack & Queue",3,"valid-parentheses:E next-greater-element-i:E implement-queue-using-stacks:E min-stack:M evaluate-reverse-polish-notation:M daily-temperatures:M car-fleet:M next-greater-element-ii:M decode-string:M asteroid-collision:M online-stock-span:M sum-of-subarray-minimums:M largest-rectangle-in-histogram:H maximal-rectangle:H"],
+["Recursion & Backtracking",4,"powx-n:M subsets:M subsets-ii:M permutations:M combination-sum:M combination-sum-ii:M letter-combinations-of-a-phone-number:M generate-parentheses:M palindrome-partitioning:M restore-ip-addresses:M word-search:M n-queens:H sudoku-solver:H"],
+["Binary Trees & BST",4,"invert-binary-tree:E maximum-depth-of-binary-tree:E diameter-of-binary-tree:E balanced-binary-tree:E same-tree:E symmetric-tree:E subtree-of-another-tree:E path-sum:E binary-tree-inorder-traversal:E binary-tree-level-order-traversal:M binary-tree-zigzag-level-order-traversal:M binary-tree-right-side-view:M count-good-nodes-in-binary-tree:M validate-binary-search-tree:M kth-smallest-element-in-a-bst:M lowest-common-ancestor-of-a-binary-search-tree:M lowest-common-ancestor-of-a-binary-tree:M construct-binary-tree-from-preorder-and-inorder-traversal:M flatten-binary-tree-to-linked-list:M house-robber-iii:M binary-tree-maximum-path-sum:H serialize-and-deserialize-binary-tree:H"],
+["Heap / Priority Queue",5,"kth-largest-element-in-a-stream:E last-stone-weight:E k-closest-points-to-origin:M task-scheduler:M top-k-frequent-words:M reorganize-string:M design-twitter:M find-median-from-data-stream:H"],
+["Trie",5,"implement-trie-prefix-tree:M design-add-and-search-words-data-structure:M replace-words:M maximum-xor-of-two-numbers-in-an-array:M word-search-ii:H"],
+["Graphs (BFS / DFS)",5,"flood-fill:E number-of-islands:M max-area-of-island:M clone-graph:M pacific-atlantic-water-flow:M surrounded-regions:M rotting-oranges:M 01-matrix:M number-of-provinces:M is-graph-bipartite:M course-schedule:M course-schedule-ii:M find-eventual-safe-states:M shortest-path-in-binary-matrix:M evaluate-division:M minimum-height-trees:M word-ladder:H"],
+["Advanced Graphs",6,"redundant-connection:M accounts-merge:M network-delay-time:M cheapest-flights-within-k-stops:M path-with-minimum-effort:M min-cost-to-connect-all-points:M find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold:M swim-in-rising-water:H reconstruct-itinerary:H"],
+["Greedy",6,"assign-cookies:E lemonade-change:E jump-game:M jump-game-ii:M gas-station:M hand-of-straights:M merge-triplets-to-form-target-triplet:M partition-labels:M valid-parenthesis-string:M candy:H"],
+["Dynamic Programming",7,"fibonacci-number:E climbing-stairs:E min-cost-climbing-stairs:E house-robber:M house-robber-ii:M longest-palindromic-substring:M palindromic-substrings:M decode-ways:M coin-change:M coin-change-ii:M maximum-product-subarray:M word-break:M longest-increasing-subsequence:M partition-equal-subset-sum:M target-sum:M ones-and-zeroes:M perfect-squares:M unique-paths:M minimum-path-sum:M triangle:M maximal-square:M longest-common-subsequence:M edit-distance:M interleaving-string:M best-time-to-buy-and-sell-stock-with-cooldown:M longest-increasing-path-in-a-matrix:H distinct-subsequences:H burst-balloons:H regular-expression-matching:H wildcard-matching:H best-time-to-buy-and-sell-stock-iii:H"],
+["Bit Manipulation & Math",8,"single-number:E number-of-1-bits:E counting-bits:E reverse-bits:E missing-number:E power-of-two:E happy-number:E plus-one:E single-number-ii:M sum-of-two-integers:M reverse-integer:M detect-squares:M"],
+["Segment Tree / Fenwick",8,"range-sum-query-mutable:M count-of-smaller-numbers-after-self:H"]
+];
+const K="dsa-tracker-v1";
+let done={};try{done=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){}
+let rv={};try{rv=JSON.parse(localStorage.getItem(K+"-rv")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(done));localStorage.setItem(K+"-rv",JSON.stringify(rv))}catch(e){}};
+const title=s=>s.split("-").map(w=>/^(i|ii|iii|iv)$/.test(w)?w.toUpperCase():w[0].toUpperCase()+w.slice(1)).join(" ");
+const L={E:"Easy",M:"Medium",H:"Hard"};
+const $=id=>document.getElementById(id);
+const rows=[],secs=[];
+T.forEach(([n,m,s])=>{
+ const d=document.createElement("details");
+ d.innerHTML=`<summary><span class="n">${n.replace("&","&amp;")}</span><span class="mo">Month ${m}</span><span class="c"></span><i class="bar"><b></b></i></summary><div class="rows"></div>`;
+ const box=d.querySelector(".rows"),sec={d,c:d.querySelector(".c"),b:d.querySelector(".bar b"),r:[]};
+ s.split(" ").forEach(x=>{
+  const [slug,df]=x.split(":"),t=title(slug);
+  const el=document.createElement("label");el.className="row";
+  el.innerHTML=`<input type="checkbox"><a target="_blank" rel="noopener" href="https://leetcode.com/problems/${slug}/">${t}</a><em class="df ${df}">${L[df]}</em><a class="g lc" target="_blank" rel="noopener" href="https://leetcode.com/problems/${slug}/">LeetCode</a><a class="g" target="_blank" rel="noopener" href="https://www.google.com/search?q=geeksforgeeks+${encodeURIComponent(t)}">GFG</a><button type="button" class="rv" title="Mark for revision">☆</button>`;
+  const cb=el.querySelector("input");cb.checked=!!done[slug];
+  cb.onchange=()=>{if(cb.checked)done[slug]=1;else delete done[slug];save();update()};
+  const rb=el.querySelector(".rv");rb.onclick=()=>{if(rv[slug])delete rv[slug];else rv[slug]=1;save();update()};const r={el,cb,rb,slug,df,t:t.toLowerCase()};rows.push(r);sec.r.push(r);box.appendChild(el);
+ });
+ secs.push(sec);$("list").appendChild(d);
+});
+function update(){
+ const q=$("q").value.trim().toLowerCase(),f=$("f").value,hd=$("hd").checked,ro=$("ro").checked,st={E:[0,0],M:[0,0],H:[0,0]};
+ let a=0,nr=0;
+ secs.forEach(s=>{
+  let k=0;
+  s.r.forEach(r=>{
+   const dn=r.cb.checked;st[r.df][1]++;if(dn){st[r.df][0]++;k++;a++}
+   const rr=!!rv[r.slug];if(rr)nr++;r.el.classList.toggle("r",rr);r.rb.classList.toggle("on",rr);r.rb.textContent=rr?"★":"☆";r.el.classList.toggle("d",dn);
+   r.el.hidden=!((!q||r.t.includes(q))&&(!f||r.df===f)&&!(hd&&dn)&&(!ro||rr));
+  });
+  s.c.textContent=k+" / "+s.r.length;s.b.style.width=(100*k/s.r.length)+"%";
+ });
+ $("tot").textContent=a+" / "+rows.length+" solved";
+ $("tb").style.width=(100*a/rows.length)+"%";
+ $("dif").textContent=`Easy ${st.E[0]}/${st.E[1]} · Medium ${st.M[0]}/${st.M[1]} · Hard ${st.H[0]}/${st.H[1]} · ★ ${nr}`;
+}
+["q","f","hd","ro"].forEach(i=>$(i).oninput=update);
+let open=false;$("ex").onclick=()=>{open=!open;secs.forEach(s=>s.d.open=open);$("ex").textContent=open?"Collapse all":"Expand all"};
+let arm=0;$("rs").onclick=()=>{
+ if(!arm){arm=1;$("rs").textContent="Click again to confirm";setTimeout(()=>{arm=0;$("rs").textContent="Reset"},3000);return}
+ done={};rv={};save();rows.forEach(r=>r.cb.checked=false);arm=0;$("rs").textContent="Reset";update();
+};
+update();
+</script></body></html>
